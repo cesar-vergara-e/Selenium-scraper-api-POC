@@ -1,6 +1,7 @@
 from flask import Flask, Response, request
 from flask_cors import CORS
 import json
+import requests
 
 
 from selenium import webdriver
@@ -39,6 +40,16 @@ def scrape_amazon_price(url):
         element = None
     return element
 
+def telegram_bot_sendtext(bot_message):
+    
+    bot_token = os.environ.get('TELEGRAM_TOKEN') 
+    bot_chatID = os.environ.get('TELEGRAM_CHATID') 
+    send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + '&parse_mode=Markdown&text=' + bot_message
+
+    response = requests.get(send_text)
+
+    return response.json()
+
 
 @app.route("/")
 def index():
@@ -54,6 +65,8 @@ def scrape():
     status = 200 if element is not None else 412
     response = json.dumps({'Price': element})
 
+    test = telegram_bot_sendtext(response)
+    print(response)
     return Response(response=response, status=status, mimetype='application/json')
 
 
