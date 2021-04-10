@@ -28,6 +28,16 @@ driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=opti
 
 print('Starting app...')
 
+def telegram_bot_sendtext(bot_message):
+    
+    bot_token = os.environ.get('TELEGRAM_TOKEN') 
+    bot_chatID = os.environ.get('TELEGRAM_CHATID') 
+    send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + '&parse_mode=Markdown&text=' + bot_message
+
+    response = requests.get(send_text)
+
+    return response.json()
+
 @sched.scheduled_job('interval', minutes=10)
 def falabella():
     url = 'https://www.falabella.com/falabella-cl/product/14618594/Xbox-Series-X/14618594'
@@ -86,15 +96,7 @@ def abcdin():
 
 
 
-def telegram_bot_sendtext(bot_message):
-    
-    bot_token = os.environ.get('TELEGRAM_TOKEN') 
-    bot_chatID = os.environ.get('TELEGRAM_CHATID') 
-    send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + '&parse_mode=Markdown&text=' + bot_message
 
-    response = requests.get(send_text)
-
-    return response.json()
 
 
 sched.start()
