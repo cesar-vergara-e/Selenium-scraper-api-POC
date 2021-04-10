@@ -23,22 +23,49 @@ print('Building chrome driver...')
 driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=options)
 
 print('Starting app...')
-app = Flask(__name__)
-CORS(app)
 
 
-# url = 'https://www.amazon.es/dp/B006CZ0LGA'
-# driver.get(url)
+url = 'https://www.falabella.com/falabella-cl/product/14618594/Xbox-Series-X/14618594'
 
-
-def scrape_amazon_price(url):
+try:
     driver.get(url)
 
-    try:
-        element = driver.find_element_by_id('priceblock_ourprice').text
-    except NoSuchElementException:
-        element = None
-    return element
+    el = driver.find_element_by_class_name('title6')
+    print(el.text)
+    if (el.text != "¡Qué mal! Justo se agotó"):
+        print("REVISAR Falabella")
+except:
+    print("hubo un error en Falabella")
+ 
+
+url = 'https://articulo.mercadolibre.cl/MLC-560235773-consola-xbox-series-x-_JM'
+
+try:
+    driver.get(url)
+
+    el = driver.find_element_by_class_name('andes-message__text--warning')
+    print(el.text)
+    if (el.text != "Publicación pausada"):
+        print("REVISAR ML")
+except:
+    print("hubo un error en ML")
+
+
+url = 'https://www.abcdin.cl/tienda/es/abcdin/entretenimiento/videojuegos/consola-serie-x-xbox-1144969?fbclid=IwAR3xlq-fWsTh_hHpk16T5SjtB43goD44-B2J7Z8NgvAuceVBE86BlB6889c'
+try:
+    driver.get(url)
+
+    el = driver.find_element_by_class_name('title-suscribir')
+    print(el.text)
+
+    if (el.text != "PRODUCTO AGOTADO"):
+        print("Revisar ABCDIN")
+
+except:
+    print("hubo un error en ABCDIN")
+
+
+
 
 def telegram_bot_sendtext(bot_message):
     
@@ -50,25 +77,3 @@ def telegram_bot_sendtext(bot_message):
 
     return response.json()
 
-
-@app.route("/")
-def index():
-    return 'Scraper alive!'
-
-
-@app.route("/api/scrape", methods=['POST'])
-def scrape():
-    url = request.json.get('url')
-    print(url)
-    element = scrape_amazon_price(url)
-
-    status = 200 if element is not None else 412
-    response = json.dumps({'Price': element})
-
-    test = telegram_bot_sendtext(response)
-    print(response)
-    return Response(response=response, status=status, mimetype='application/json')
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
