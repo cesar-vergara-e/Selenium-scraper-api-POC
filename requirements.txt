@@ -3,3 +3,4 @@ bs4
 requests
 flask
 flask_cors
+APScheduler==3.0.0

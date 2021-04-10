@@ -5,8 +5,13 @@ import requests
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
 from selenium.webdriver.chrome.options import Options
+from apscheduler.schedulers.blocking import BlockingScheduler
+
 import os
 import time
+
+
+sched = BlockingScheduler()
 
 CHROMEDRIVER_PATH = os.environ.get('CHROMEDRIVER_PATH', '/usr/local/bin/chromedriver')
 GOOGLE_CHROME_BIN = os.environ.get('GOOGLE_CHROME_BIN', '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
@@ -23,6 +28,7 @@ driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=opti
 
 print('Starting app...')
 
+@sched.scheduled_job('interval', minutes=3)
 def falabella():
     url = 'https://www.falabella.com/falabella-cl/product/14618594/Xbox-Series-X/14618594'
     url = 'https://www.falabella.com/falabella-cl/product/15136328/Control-Xbox-Series-X-Black/15136328'
@@ -89,7 +95,3 @@ def telegram_bot_sendtext(bot_message):
     return response.json()
 
 
-print("Falabella")
-falabella()
-print("ml")
-ml()
