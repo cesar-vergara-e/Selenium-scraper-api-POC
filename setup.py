@@ -32,7 +32,7 @@ print('Starting app...')
 def falabella():
     url = 'https://www.falabella.com/falabella-cl/product/14618594/Xbox-Series-X/14618594'
     url = 'https://www.falabella.com/falabella-cl/product/15136328/Control-Xbox-Series-X-Black/15136328'
-    for i in range(2):
+    for i in range(10):
         try:
             driver.get(url)
             el = driver.find_element_by_class_name('price-0')
@@ -40,43 +40,44 @@ def falabella():
                 telegram_bot_sendtext("REVISAR FALABELLA https://www.falabella.com/falabella-cl/product/14618594/Xbox-Series-X/14618594")
         # do thing
         except:
-            time.sleep(1)
+            time.sleep(10)
             print("exception")
         else:
             break   
 
- 
+@sched.scheduled_job('interval', minutes=3)
 def ml():
     url = 'https://articulo.mercadolibre.cl/MLC-560235773-consola-xbox-series-x-_JM'
     #url = 'https://articulo.mercadolibre.cl/MLC-562836047-sony-playstation-ps5-version-disco-_JM'
     
     
-    for i in range(2):
+    for i in range(10):
         try:
             driver.get(url)
             el = driver.find_element_by_class_name('ui-pdp-actions__container')
             if(el.text):
-                print("wuju")
+                telegram_bot_sendtext("REVISAR ML https://articulo.mercadolibre.cl/MLC-560235773-consola-xbox-series-x-_JM")
         except:
-            time.sleep(1)
+            time.sleep(10)
             print("exception")
         else:
             break   
 
+@sched.scheduled_job('interval', minutes=3)
 def abcdin():
     url = 'https://www.abcdin.cl/tienda/es/abcdin/entretenimiento/videojuegos/consola-serie-x-xbox-1144969?fbclid=IwAR3xlq-fWsTh_hHpk16T5SjtB43goD44-B2J7Z8NgvAuceVBE86BlB6889c'
     #url = 'https://www.abcdin.cl/tienda/es/abcdin/consola-nintendo-switch-lite-gris-1136581'
 
-    for i in range(2):
+    for i in range(10):
         try:
             driver.get(url)
             print("intento abcdin")
             el = driver.find_element_by_id('productPageShoppingCart')
             print(el.text)
             if(el.text != "Producto Agotado"):
-                print("wuju")
+                telegram_bot_sendtext("REVISAR ABCDIN https://www.abcdin.cl/tienda/es/abcdin/entretenimiento/videojuegos/consola-serie-x-xbox-1144969?fbclid=IwAR3xlq-fWsTh_hHpk16T5SjtB43goD44-B2J7Z8NgvAuceVBE86BlB6889c")
         except:
-            time.sleep(1)
+            time.sleep(10)
             print("exception")
         else: 
             break
@@ -95,3 +96,4 @@ def telegram_bot_sendtext(bot_message):
     return response.json()
 
 
+sched.start()
