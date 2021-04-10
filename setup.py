@@ -28,7 +28,7 @@ driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=opti
 
 print('Starting app...')
 
-@sched.scheduled_job('interval', minutes=3)
+@sched.scheduled_job('interval', minutes=10)
 def falabella():
     url = 'https://www.falabella.com/falabella-cl/product/14618594/Xbox-Series-X/14618594'
     url = 'https://www.falabella.com/falabella-cl/product/15136328/Control-Xbox-Series-X-Black/15136328'
@@ -45,7 +45,7 @@ def falabella():
         else:
             break   
 
-@sched.scheduled_job('interval', minutes=3)
+@sched.scheduled_job('interval', minutes=10)
 def ml():
     url = 'https://articulo.mercadolibre.cl/MLC-560235773-consola-xbox-series-x-_JM'
     #url = 'https://articulo.mercadolibre.cl/MLC-562836047-sony-playstation-ps5-version-disco-_JM'
@@ -63,7 +63,7 @@ def ml():
         else:
             break   
 
-@sched.scheduled_job('interval', minutes=3)
+@sched.scheduled_job('interval', minutes=10)
 def abcdin():
     url = 'https://www.abcdin.cl/tienda/es/abcdin/entretenimiento/videojuegos/consola-serie-x-xbox-1144969?fbclid=IwAR3xlq-fWsTh_hHpk16T5SjtB43goD44-B2J7Z8NgvAuceVBE86BlB6889c'
     #url = 'https://www.abcdin.cl/tienda/es/abcdin/consola-nintendo-switch-lite-gris-1136581'
@@ -73,7 +73,6 @@ def abcdin():
             driver.get(url)
             print("intento abcdin")
             el = driver.find_element_by_id('productPageShoppingCart')
-            print(el.text)
             if(el.text != "Producto Agotado"):
                 telegram_bot_sendtext("REVISAR ABCDIN https://www.abcdin.cl/tienda/es/abcdin/entretenimiento/videojuegos/consola-serie-x-xbox-1144969?fbclid=IwAR3xlq-fWsTh_hHpk16T5SjtB43goD44-B2J7Z8NgvAuceVBE86BlB6889c")
         except:
