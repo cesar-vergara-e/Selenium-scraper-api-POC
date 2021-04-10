@@ -1,5 +1,3 @@
-from flask import Flask, Response, request
-from flask_cors import CORS
 import json
 import requests
 
@@ -8,9 +6,10 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
 from selenium.webdriver.chrome.options import Options
 import os
+import time
 
 CHROMEDRIVER_PATH = os.environ.get('CHROMEDRIVER_PATH', '/usr/local/bin/chromedriver')
-GOOGLE_CHROME_BIN = os.environ.get('GOOGLE_CHROME_BIN', '/usr/bin/google-chrome')
+GOOGLE_CHROME_BIN = os.environ.get('GOOGLE_CHROME_BIN', '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
 
 
 options = Options()
@@ -24,45 +23,57 @@ driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=opti
 
 print('Starting app...')
 
+def falabella():
+    url = 'https://www.falabella.com/falabella-cl/product/14618594/Xbox-Series-X/14618594'
+    url = 'https://www.falabella.com/falabella-cl/product/15136328/Control-Xbox-Series-X-Black/15136328'
+    for i in range(2):
+        try:
+            driver.get(url)
+            el = driver.find_element_by_class_name('price-0')
+            if(el.text):
+                telegram_bot_sendtext("REVISAR FALABELLA https://www.falabella.com/falabella-cl/product/14618594/Xbox-Series-X/14618594")
+        # do thing
+        except:
+            time.sleep(1)
+            print("exception")
+        else:
+            break   
 
-url = 'https://www.falabella.com/falabella-cl/product/14618594/Xbox-Series-X/14618594'
-
-try:
-    driver.get(url)
-
-    el = driver.find_element_by_class_name('title6')
-    print(el.text)
-    if (el.text != "¡Qué mal! Justo se agotó"):
-        print("REVISAR Falabella")
-except:
-    print("hubo un error en Falabella")
  
+def ml():
+    url = 'https://articulo.mercadolibre.cl/MLC-560235773-consola-xbox-series-x-_JM'
+    #url = 'https://articulo.mercadolibre.cl/MLC-562836047-sony-playstation-ps5-version-disco-_JM'
+    
+    
+    for i in range(2):
+        try:
+            driver.get(url)
+            el = driver.find_element_by_class_name('ui-pdp-actions__container')
+            if(el.text):
+                print("wuju")
+        except:
+            time.sleep(1)
+            print("exception")
+        else:
+            break   
 
-url = 'https://articulo.mercadolibre.cl/MLC-560235773-consola-xbox-series-x-_JM'
+def abcdin():
+    url = 'https://www.abcdin.cl/tienda/es/abcdin/entretenimiento/videojuegos/consola-serie-x-xbox-1144969?fbclid=IwAR3xlq-fWsTh_hHpk16T5SjtB43goD44-B2J7Z8NgvAuceVBE86BlB6889c'
+    #url = 'https://www.abcdin.cl/tienda/es/abcdin/consola-nintendo-switch-lite-gris-1136581'
 
-try:
-    driver.get(url)
-
-    el = driver.find_element_by_class_name('andes-message__text--warning')
-    print(el.text)
-    if (el.text != "Publicación pausada"):
-        print("REVISAR ML")
-except:
-    print("hubo un error en ML")
-
-
-url = 'https://www.abcdin.cl/tienda/es/abcdin/entretenimiento/videojuegos/consola-serie-x-xbox-1144969?fbclid=IwAR3xlq-fWsTh_hHpk16T5SjtB43goD44-B2J7Z8NgvAuceVBE86BlB6889c'
-try:
-    driver.get(url)
-
-    el = driver.find_element_by_class_name('title-suscribir')
-    print(el.text)
-
-    if (el.text != "PRODUCTO AGOTADO"):
-        print("Revisar ABCDIN")
-
-except:
-    print("hubo un error en ABCDIN")
+    for i in range(2):
+        try:
+            driver.get(url)
+            print("intento abcdin")
+            el = driver.find_element_by_id('productPageShoppingCart')
+            print(el.text)
+            if(el.text != "Producto Agotado"):
+                print("wuju")
+        except:
+            time.sleep(1)
+            print("exception")
+        else: 
+            break
 
 
 
@@ -77,3 +88,8 @@ def telegram_bot_sendtext(bot_message):
 
     return response.json()
 
+
+print("Falabella")
+falabella()
+print("ml")
+ml()
