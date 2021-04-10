@@ -42,7 +42,7 @@ def falabella():
         # do thing
         except:
             time.sleep(10)
-            print("exception")
+            print("exception falabella")
         else:
             break   
 
@@ -61,7 +61,7 @@ def ml():
                 telegram_bot_sendtext("REVISAR ML https://articulo.mercadolibre.cl/MLC-560235773-consola-xbox-series-x-_JM")
         except:
             time.sleep(10)
-            print("exception")
+            print("exception ml")
         else:
             break   
 
@@ -79,7 +79,7 @@ def abcdin():
                 telegram_bot_sendtext("REVISAR ABCDIN https://www.abcdin.cl/tienda/es/abcdin/entretenimiento/videojuegos/consola-serie-x-xbox-1144969?fbclid=IwAR3xlq-fWsTh_hHpk16T5SjtB43goD44-B2J7Z8NgvAuceVBE86BlB6889c")
         except:
             time.sleep(10)
-            print("exception")
+            print("exception abcdin")
         else: 
             break
 
