@@ -34,6 +34,7 @@ def falabella():
     url = 'https://www.falabella.com/falabella-cl/product/15136328/Control-Xbox-Series-X-Black/15136328'
     for i in range(10):
         try:
+            print("intento falabella")
             driver.get(url)
             el = driver.find_element_by_class_name('price-0')
             if(el.text):
@@ -53,6 +54,7 @@ def ml():
     
     for i in range(10):
         try:
+            print("intento ml")
             driver.get(url)
             el = driver.find_element_by_class_name('ui-pdp-actions__container')
             if(el.text):
@@ -70,8 +72,8 @@ def abcdin():
 
     for i in range(10):
         try:
-            driver.get(url)
             print("intento abcdin")
+            driver.get(url)
             el = driver.find_element_by_id('productPageShoppingCart')
             if(el.text != "Producto Agotado"):
                 telegram_bot_sendtext("REVISAR ABCDIN https://www.abcdin.cl/tienda/es/abcdin/entretenimiento/videojuegos/consola-serie-x-xbox-1144969?fbclid=IwAR3xlq-fWsTh_hHpk16T5SjtB43goD44-B2J7Z8NgvAuceVBE86BlB6889c")
