@@ -41,7 +41,6 @@ def telegram_bot_sendtext(bot_message):
 @sched.scheduled_job('interval', minutes=2)
 def falabella():
     url = 'https://www.falabella.com/falabella-cl/product/14618594/Xbox-Series-X/14618594'
-    url = 'https://www.falabella.com/falabella-cl/product/15136328/Control-Xbox-Series-X-Black/15136328'
     for i in range(10):
         try:
             print("intento falabella")
@@ -53,7 +52,7 @@ def falabella():
         # do thing
         except:
             time.sleep(10)
-            raise
+            print("exception falabella")
         else:
             break   
 
