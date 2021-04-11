@@ -38,7 +38,7 @@ def telegram_bot_sendtext(bot_message):
 
     return response.json()
 
-@sched.scheduled_job('interval', minutes=10)
+@sched.scheduled_job('interval', minutes=2)
 def falabella():
     url = 'https://www.falabella.com/falabella-cl/product/14618594/Xbox-Series-X/14618594'
     url = 'https://www.falabella.com/falabella-cl/product/15136328/Control-Xbox-Series-X-Black/15136328'
@@ -49,11 +49,11 @@ def falabella():
             el = driver.find_element_by_class_name('price-0')
             if(el.text):
                 print("falabella encontrado")
-                #telegram_bot_sendtext("REVISAR FALABELLA https://www.falabella.com/falabella-cl/product/14618594/Xbox-Series-X/14618594")
+                telegram_bot_sendtext("REVISAR FALABELLA https://www.falabella.com/falabella-cl/product/14618594/Xbox-Series-X/14618594")
         # do thing
         except:
             time.sleep(10)
-            print("exception falabella")
+            raise
         else:
             break   
 
@@ -94,6 +94,5 @@ def falabella():
 #         else: 
 #             break
 
-# sched.start()
-
-falabella()
+#falabella()
+sched.start()
