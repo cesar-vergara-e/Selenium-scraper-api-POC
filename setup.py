@@ -48,6 +48,7 @@ def falabella():
             driver.get(url)
             el = driver.find_element_by_class_name('price-0')
             if(el.text):
+                print("falabella encontrado")
                 telegram_bot_sendtext("REVISAR FALABELLA https://www.falabella.com/falabella-cl/product/14618594/Xbox-Series-X/14618594")
         # do thing
         except:
